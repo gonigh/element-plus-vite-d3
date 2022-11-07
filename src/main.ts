@@ -1,6 +1,5 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-
 // import "~/styles/element/index.scss";
 
 // import ElementPlus from "element-plus";
