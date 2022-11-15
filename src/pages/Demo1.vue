@@ -45,6 +45,7 @@ const draw = () => {
         .attr('transform', 'translate(50,50)')
         .attr('width', contentWidth)
         .attr('height', contentHeight)
+        .append('g')
         .selectAll('rect')
         .data(tableData)
         .enter()

@@ -4,7 +4,10 @@
     <div style="display: flex">
       <BaseSide />
       <div>
-        <RouterView></RouterView>
+        <KeepAlive>
+          <RouterView></RouterView>
+        </KeepAlive>
+
       </div>
     </div>
   </el-config-provider>
