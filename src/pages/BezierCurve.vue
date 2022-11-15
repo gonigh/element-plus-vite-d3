@@ -13,7 +13,7 @@ const svgHeight = 300;
 const svgWidth = 350;
 const contentWidth = 300;
 const contentHeight = 250;
-const dotColor = 'rgb(79, 209, 142)'
+const dotColor = 'var(--ep-menu-active-color)'
 const state = reactive({
     curve2: [
         {
@@ -58,14 +58,16 @@ function createCurve2(points: Point[]): void {
         .append('text')
         .attr('text-anchor', 'middle')
         .text('二次贝塞尔曲线')
+        .attr('fill','var(--ep-menu-text-color)')
 
     const rect = svg.append('g')
         .attr('transform', 'translate(25,30)')
         .append('rect')
         .attr('width', contentWidth)
         .attr('height', contentHeight)
-        .attr('stroke', 'black')
+        .attr('stroke', 'var(--ep-menu-text-color)')
         .attr('fill', 'none')
+
     const line = svg.append('g')
         .attr('transform', 'translate(25,30)')
         .append('path')
@@ -132,21 +134,23 @@ function createCurve3(points: Point[]): void {
     const svg = d3.select('#curve3').append('svg')
         .attr('width', svgWidth)
         .attr('height', svgHeight)
-        .attr('fill', 'black');
 
     const title = svg.append('g')
         .attr('transform', `translate(${svgWidth / 2},20)`)
         .append('text')
         .attr('text-anchor', 'middle')
         .text('三次贝塞尔曲线')
+        .attr('font-size',16)
+        .attr('fill','var(--ep-menu-text-color)')
 
     const rect = svg.append('g')
         .attr('transform', 'translate(25,30)')
         .append('rect')
         .attr('width', contentWidth)
         .attr('height', contentHeight)
-        .attr('stroke', 'black')
+        .attr('stroke', 'var(--ep-menu-text-color)')
         .attr('fill', 'none')
+
     const line = svg.append('g')
         .attr('transform', 'translate(25,30)')
         .append('path')
@@ -220,10 +224,13 @@ onMounted(() => {
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .curve-container {
     margin: 10px;
     display: flex;
+}
+text{
+    color: var(--ep-menu-text-color)
 }
 .cursor{
     margin: 10px;
