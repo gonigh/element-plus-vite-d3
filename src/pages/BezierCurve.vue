@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import * as d3 from 'd3'
 import { select } from 'd3';
-import { pa } from 'element-plus/es/locale';
 import { onMounted, reactive } from 'vue';
 
 interface Point {
