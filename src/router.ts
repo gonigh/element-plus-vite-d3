@@ -3,6 +3,7 @@ import Demo1 from "./pages/Demo1.vue";
 import Demo2 from "./pages/Demo2.vue";
 import ColorMixer from './pages/ColorMixerDemo.vue'
 import BezierCurve from './pages/BezierCurve.vue'
+import Upload from './pages/Upload/index.vue'
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
     path: "/curve",
     name: "贝塞尔曲线",
     component: BezierCurve,
+  },{
+    path: "/upload",
+    name: "上传文件",
+    component : Upload
   }
 ];
 

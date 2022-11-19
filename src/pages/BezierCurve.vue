@@ -57,7 +57,7 @@ function createCurve2(points: Point[]): void {
         .append('text')
         .attr('text-anchor', 'middle')
         .text('二次贝塞尔曲线')
-        .attr('fill','var(--ep-menu-text-color)')
+        .attr('fill', 'var(--ep-menu-text-color)')
 
     const rect = svg.append('g')
         .attr('transform', 'translate(25,30)')
@@ -139,8 +139,8 @@ function createCurve3(points: Point[]): void {
         .append('text')
         .attr('text-anchor', 'middle')
         .text('三次贝塞尔曲线')
-        .attr('font-size',16)
-        .attr('fill','var(--ep-menu-text-color)')
+        .attr('font-size', 16)
+        .attr('fill', 'var(--ep-menu-text-color)')
 
     const rect = svg.append('g')
         .attr('transform', 'translate(25,30)')
@@ -167,7 +167,7 @@ function createCurve3(points: Point[]): void {
     const drawCurve = function (points: Point[]): void {
         const path1 = d3.path();
         path1.moveTo(points[0].x, points[0].y);
-        path1.bezierCurveTo(points[1].x, points[1].y, points[2].x, points[2].y,points[3].x,points[3].y)
+        path1.bezierCurveTo(points[1].x, points[1].y, points[2].x, points[2].y, points[3].x, points[3].y)
         curve.attr('d', path1.toString());
 
         const path2 = d3.line<Point>()
@@ -228,10 +228,12 @@ onMounted(() => {
     margin: 10px;
     display: flex;
 }
-text{
+
+text {
     color: var(--ep-menu-text-color)
 }
-.cursor{
+
+.cursor {
     margin: 10px;
 }
 </style>
