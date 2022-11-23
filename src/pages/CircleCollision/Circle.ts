@@ -22,20 +22,20 @@ export class Circle {
     let angle = Math.random() * Math.PI * 2;
     this.dx = Math.cos(angle);
     this.dy = Math.sin(angle);
-    
+
     this.el = el;
     this.right = right;
     this.bottom = bottom;
   }
 
   update() {
-    if (this.x > -this.right || this.x < this.r) {
+    if (this.x > this.right - this.r || this.x < this.r) {
       this.dx = -this.dx;
     }
     if (this.y > this.bottom - this.r || this.y < this.r) {
       this.dy = -this.dy;
     }
-    console.log(this.x,this.y,this.dx,this.dy);
+    console.log(this.x, this.y, this.dx, this.dy);
     this.x += this.dx;
     this.y += this.dy;
     this.el.attr("cx", this.x).attr("cy", this.y);

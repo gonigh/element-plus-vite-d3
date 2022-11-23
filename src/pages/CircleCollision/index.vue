@@ -30,7 +30,7 @@ onMounted(() => {
             .attr('r', r)
             .attr('fill', 'block');
         let circle = new Circle(x, y, r, circleElement, width, height);
-        if (circleList.length > 10) {
+        if (circleList.length > 100) {
             circleList[0].el.remove();
             circleList.shift();
         }
