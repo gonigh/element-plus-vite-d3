@@ -1,9 +1,9 @@
 <template>
   <el-config-provider namespace="ep">
-    <BaseHeader />
-    <div style="display: flex">
+    <BaseHeader style="height: 8%;"/>
+    <div style="display: flex;width:100%;height: 90%;">
       <BaseSide />
-      <div>
+      <div style="flex:1">
         <KeepAlive>
           <RouterView></RouterView>
         </KeepAlive>
@@ -14,8 +14,15 @@
 </template>
 
 <style>
+
+html body{
+  height: 100%;
+  width: 100%;
+}
 #app {
   text-align: center;
+  height: 100%;
+  width: 100%;
   color: var(--ep-text-color-primary);
 }
 

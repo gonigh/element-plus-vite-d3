@@ -4,6 +4,7 @@ import Demo2 from "./pages/Demo2.vue";
 import ColorMixer from './pages/ColorMixerDemo.vue'
 import BezierCurve from './pages/BezierCurve.vue'
 import Upload from './pages/Upload/index.vue'
+import CircleCollision from './pages/CircleCollision/index.vue'
 
 const routes = [
   {
@@ -27,6 +28,10 @@ const routes = [
     path: "/upload",
     name: "上传文件",
     component : Upload
+  },{
+    path: "/circle-collision",
+    name: "小球碰撞",
+    component : CircleCollision
   }
 ];
 
