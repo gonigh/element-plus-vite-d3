@@ -10,7 +10,7 @@ const render = () => {
 
 Circle.list = new Array<Circle>();
 
-const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(new Array(10).fill(0).map((item,i)=>i.toString()));
+const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(new Array(10).fill(0).map((item, i) => i.toString()));
 
 onMounted(() => {
     const container = document.getElementById('circle-collision-container');
@@ -20,6 +20,14 @@ onMounted(() => {
         .append('svg')
         .attr('width', '100%')
         .attr('height', '100%')
+    svg.append('g')
+        .attr('transform', `translate(${width / 2},${height / 2})`)
+        .append('text')
+        .text('CLICK')
+        .attr('font-size', 48)
+        .attr('text-anchor', 'middle')
+        .attr('pointer-events', 'none')
+        .attr('fill', 'rgba(0,0,0,.2)')
     const g = svg.append('g')
     svg.on('click', (e) => {
         let x = e.offsetX;
@@ -28,7 +36,7 @@ onMounted(() => {
         let circleElement = g.append('g')
             .attr('transform', `translate(${x},${y})`)
 
-        let circle = new Circle(x, y, colorScale((Math.random()*10).toFixed(0)), circleElement, width, height);
+        let circle = new Circle(x, y, colorScale((Math.random() * 10).toFixed(0)), circleElement, width, height);
 
     })
     render();
