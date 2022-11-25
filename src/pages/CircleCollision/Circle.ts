@@ -10,6 +10,7 @@ export class Circle {
   right: number;
   bottom: number;
   start: Date;
+  pre: Date;
   arcPath: d3.Arc<any, d3.DefaultArcObject>;
   maxTime: number;
 
@@ -26,6 +27,7 @@ export class Circle {
     while (Circle.list.length >= 100) Circle.list.shift();
 
     this.start = new Date();
+    this.pre = new Date();
     this.maxTime = 10000;
     let angle = Math.random() * Math.PI * 2;
     this.dx = Math.cos(angle);
@@ -55,7 +57,8 @@ export class Circle {
   }
 
   update() {
-    let time = new Date().valueOf() - this.start.valueOf();
+    let current = new Date();
+    let time = current.valueOf() - this.start.valueOf();
     if (time >= this.maxTime) {
       this.el.remove();
       Circle.list = Circle.list.filter((item) => item != this);
@@ -67,10 +70,10 @@ export class Circle {
     if (this.y > this.bottom - this.r || this.y < this.r) {
       this.dy = -this.dy;
     }
-    this.x += this.dx;
-    this.y += this.dy;
+    this.x += (this.dx / 10) * (current.valueOf() - this.pre.valueOf());
+    this.y += (this.dy / 10) * (current.valueOf() - this.pre.valueOf());
+    this.pre = current;
     this.el.attr("transform", `translate(${this.x},${this.y})`);
-
     let endAngle = (time / this.maxTime) * (Math.PI * 2);
     this.el
       .select("path")
