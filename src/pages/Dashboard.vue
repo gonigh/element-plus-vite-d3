@@ -11,7 +11,7 @@ const state = reactive<{
     startValue: 0,
     endValue: 180,
     color: ['red', 'yellow', 'green'],
-    value: 180
+    value: 80
 });
 
 const startAngle = -Math.PI * 2 / 3;
@@ -19,7 +19,7 @@ const endAngle = Math.PI * 2 / 3;
 const width = 400;
 const height = 400;
 const radius = 180;
-
+const scaleWidth = 30;
 let fillColor;
 // 定义比例尺
 const colorRate = d3.scaleLinear()
@@ -61,9 +61,25 @@ const createInnerArc = function (svg: d3.Selection<SVGGElement, unknown, HTMLEle
 
     // 内圆弧路径
     const innerArc = d3.arc()
-        .innerRadius(radius - 16)
+        .innerRadius(radius - 30)
         .outerRadius(radius)
         .startAngle(startAngle)
+
+    // const linearOpacity = svg.select('defs')
+    //     .append('linearGradient')
+    //     .attr('id', 'linearOpacity')
+    //     .attr("x1", "0%")
+    //     .attr("y1", "0%")
+    //     .attr("x2", "100%")
+    //     .attr("y2", "0%");
+    // linearOpacity.append('stop').attr('offset', '0%').attr('stop-color', 'white');
+    // linearOpacity.append('stop').attr('offset', '100%').attr('stop-color', 'black');
+    // svg.select('defs').append('mask')
+    //     .attr('id', 'linearMask')
+    //     .append('path')
+    //     .attr('d', innerArc.endAngle(endAngle))
+    //     .attr('fill', 'url(#linearOpacity)')
+    //     .attr("transform", `translate(${width / 2},${height / 2})`);
 
     // 创建展示部分的剪切路径
     svg.select('defs').append('clipPath')
@@ -75,6 +91,8 @@ const createInnerArc = function (svg: d3.Selection<SVGGElement, unknown, HTMLEle
         .attr('d', innerArc.endAngle(endAngle))
         .attr('fill', 'url(#gradient)')
         .attr('clip-path', 'url(#innerArcClip)')
+        // .attr('mask', '#url(linearMask)');
+    .attr('opacity', .8)
 
 }
 
@@ -84,16 +102,27 @@ const createNeeder = function (svg: d3.Selection<SVGGElement, unknown, HTMLEleme
 
     const currentColor = colorRate(state.value);
 
-    const r = 20
+    const gradient = svg.select('defs')
+        .append('radialGradient')
+        .attr('id', 'needleColor')
+        .attr('r', '80%');
+
+    gradient.append("stop")
+        .attr("offset", "40%")
+        .attr("stop-color", "transparent");
+    gradient.append("stop")
+        .attr("offset", "60%")
+        .attr("stop-color", currentColor);
+
+
+    const r = 40
     // 绘制圆环
-    const outArc = d3.arc()
-        .innerRadius(r)
-        .outerRadius(r + 2)
-        .startAngle(0)
-        .endAngle(Math.PI * 2);
-    g.append('path')
-        .attr('d', outArc)
-        .attr('fill', currentColor)
+    g.append('circle')
+        .attr('r', r)
+        .attr('fill', 'url(#needleColor)')
+        .attr('stoke', currentColor)
+        .attr('opacity', .6)
+
 
     /**
      * 指针可以用一个等腰三角形除去圆形部分得到,
@@ -124,7 +153,7 @@ const createNeeder = function (svg: d3.Selection<SVGGElement, unknown, HTMLEleme
     }
 
     const h = 120;
-    const w = 4;
+    const w = 10;
     const point: { x: number, y: number } = getIntersection(h, w, r);
     const points = [
         [point?.x, -point?.y],
@@ -138,7 +167,8 @@ const createNeeder = function (svg: d3.Selection<SVGGElement, unknown, HTMLEleme
         .append('path')
         .attr('d', d3.line())
         .attr('stroke', currentColor)
-        .attr('fill', currentColor);
+        .attr('fill', currentColor)
+        .attr('opacity', .6);
 
     // 旋转角度，弧度和角度需要转换
     let rotate = angleScale(state.value);
@@ -150,8 +180,9 @@ const createNeeder = function (svg: d3.Selection<SVGGElement, unknown, HTMLEleme
         .attr('transform', `translate(${width / 2},${height / 2})`)
         .append('text')
         .text('稳')
-        .attr('dy', 5)
+        .attr('dy', 10)
         .attr('text-anchor', 'middle')
+        .attr('font-size', 30)
         .attr('fill', currentColor)
 }
 
@@ -167,10 +198,10 @@ const createScale = function (svg: d3.Selection<SVGGElement, unknown, HTMLElemen
         .append('rect')
         .attr('x', 0)
         .attr('y', (d, i) => i % 5 == 0 ? -2 : -1)
-        .attr('width', (d, i) => i % 5 == 0 ? 20 : 10)
+        .attr('width', (d, i) => i % 5 == 0 ? scaleWidth : scaleWidth / 2)
         .attr('height', (d, i) => i % 5 == 0 ? 4 : 2)
         .attr('fill', (d, i) => colorRate(i * valueInc))
-        .attr('transform', (d, i) => `rotate(${angleScale(i * valueInc) - 90}) translate(${radius - (i % 5 == 0 ? 20 : 10)},0)`)
+        .attr('transform', (d, i) => `rotate(${angleScale(i * valueInc) - 90}) translate(${radius - (i % 5 == 0 ? scaleWidth : scaleWidth / 2)},0)`)
 
     const scaleInc = (state.endValue - state.startValue) / 6;
     g.selectAll('text')
@@ -179,7 +210,10 @@ const createScale = function (svg: d3.Selection<SVGGElement, unknown, HTMLElemen
         .append('text')
         .text((d, i) => i * scaleInc)
         .attr('text-anchor', 'middle')
-        .attr('transform', (d, i) => `rotate(${angleScale(i * scaleInc) - 90}) translate(${radius + 4},0) rotate(90)`)
+        .attr('font-size', 20)
+        .attr('opacity', .5)
+        .attr('fill', 'white')
+        .attr('transform', (d, i) => `rotate(${angleScale(i * scaleInc) - 90}) translate(${radius - 50},0) rotate(${angleScale(-i * scaleInc) - 30})`)
 }
 
 onMounted(() => {
@@ -221,5 +255,6 @@ onMounted(() => {
     width: 400px;
     height: 400px;
     border: 1px solid black;
+    background-color: #222;
 }
 </style>

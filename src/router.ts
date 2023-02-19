@@ -6,6 +6,7 @@ import BezierCurve from './pages/BezierCurve.vue'
 import Upload from './pages/Upload/index.vue'
 import CircleCollision from './pages/CircleCollision/index.vue'
 import Dashboard from "./pages/Dashboard.vue";
+import SegProgress from "./pages/SegProgress.vue";
 
 const routes = [
   {
@@ -37,6 +38,10 @@ const routes = [
     path: "/dashboard",
     name: "仪表盘",
     component : Dashboard
+  },{
+    path: "/seg-progress",
+    name: "段式进度条",
+    component : SegProgress
   }
 ];
 
