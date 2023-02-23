@@ -25,6 +25,7 @@ export default {
         this.drawLines(svg);
     },
     methods: {
+        
         // 获取边界值
         getBoundary(obj) {
             let max = -Number.MAX_VALUE;
@@ -36,6 +37,7 @@ export default {
             return [min, max];
         },
 
+        // 整理数据，输出为可以被d3.line使用的数据
         getLineData(obj) {
             let lineData = new Array(this.length).fill(0).map((t, i) => {
                 let line = [];
@@ -49,6 +51,7 @@ export default {
             return lineData;
         },
 
+        // 绘制网格
         drawGrid(svg) {
             const g = svg.append('g').attr('transform', `translate(${this.padding},${this.padding})`);
             const gridWidth = this.width - this.padding * 2;
